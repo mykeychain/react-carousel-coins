@@ -5,19 +5,39 @@ import image2 from "./image2.jpg";
 import image3 from "./image3.jpg";
 import Card from "./Card";
 
+
+/** Carousel
+ * 
+ * Props: 
+ *  - cardData [ {src, caption}, ... ]
+ * 
+ * State:
+ *  - cardIdx: index of current photo
+ * 
+ *  Carousel -> Card
+ */
+
 function Carousel(props) {
   const [cardIdx, setCardIdx] = useState(0);
   const card = props.cardData[cardIdx];
   const total = props.cardData.length;
   const goForward = () => setCardIdx(cardIdx + 1);
+  const goBackward = () => setCardIdx(cardIdx - 1);
+
+  const leftArrowClass = cardIdx > 0 ? 
+              "fas fa-chevron-circle-left fa-2x" : "hidden";
+
+  const rightArrowClass = cardIdx < total - 1 ? 
+              "fas fa-chevron-circle-right fa-2x" : "hidden";
+
 
   return (
     <div className="Carousel">
       <h1>{props.title}</h1>
       <div className="Carousel-main">
         <i
-          className="fas fa-chevron-circle-left fa-2x"
-          onClick={goForward}
+          className={leftArrowClass}
+          onClick={goBackward}
         />
         <Card
           caption={card.caption}
@@ -26,13 +46,15 @@ function Carousel(props) {
           totalNum={total}
         />
         <i
-          className="fas fa-chevron-circle-right fa-2x"
+          className={rightArrowClass}
           onClick={goForward}
         />
       </div>
     </div>
   );
 }
+
+
 
 Carousel.defaultProps = {
   cardData: [
