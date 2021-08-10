@@ -2,6 +2,10 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import Carousel from "./Carousel";
 
+it("carousel renders without crashing", function() {
+  render(<Carousel />);
+});
+
 it("works when you click on the right arrow", function() {
   const { container } = render(<Carousel />);
 
@@ -25,3 +29,8 @@ it("works when you click on the right arrow", function() {
     container.querySelector('img[alt="Photo by Pratik Patel on Unsplash"]')
   ).toBeInTheDocument();
 });
+
+it("matches snapshot", function() {
+  const { container } = render(<Carousel />);
+  expect(container).toMatchSnapshot();
+})
